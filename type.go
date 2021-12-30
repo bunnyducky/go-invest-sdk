@@ -19,6 +19,7 @@ const (
 type OperationRequest struct {
 	Accounts map[string]interface{} `json:"accounts"`
 	Data     map[string]interface{} `json:"data"`
+	Platform string                 `json:"platform"`
 }
 
 type OperationResponse struct {
