@@ -1,4 +1,4 @@
-module github.com/bunnyducky/invest-sdk
+module github.com/bunnyducky/go-invest-sdk
 
 go 1.17
 
