@@ -6,17 +6,28 @@ import (
 	"github.com/gagliardetto/solana-go"
 )
 
-func (c *Client) RaydiumSwap(ctx context.Context, owner solana.PublicKey, sourceTokenMint solana.PublicKey, destTokenMint solana.PublicKey, amountIn uint64, minAmountout uint64) (*OperationResponse, error) {
+type RaydiumSwapAccounts struct {
+	owner           solana.PublicKey
+	sourceTokenMint solana.PublicKey
+	destTokenMint   solana.PublicKey
+}
+
+type RaydiumSwapData struct {
+	amountIn     uint64
+	minAmountout uint64
+}
+
+func (c *Client) RaydiumSwap(ctx context.Context, accounts RaydiumSwapAccounts, data RaydiumSwapData) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "raydium/swap", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount":    owner,
-			"sourceTokenMint": sourceTokenMint,
-			"destTokenMint":   destTokenMint,
+			"ownerAccount":    accounts.owner,
+			"sourceTokenMint": accounts.sourceTokenMint,
+			"destTokenMint":   accounts.destTokenMint,
 		},
 		Data: map[string]interface{}{
-			"amountIn":     amountIn,
-			"minAmountOut": minAmountout,
+			"amountIn":     data.amountIn,
+			"minAmountOut": data.minAmountout,
 		},
 	}, &result)
 

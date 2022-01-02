@@ -6,26 +6,38 @@ import (
 	"github.com/gagliardetto/solana-go"
 )
 
-func (c *Client) PortInit(ctx context.Context, owner solana.PublicKey, payer solana.PublicKey, tokenMint solana.PublicKey, stakeAmount uint64) (*OperationResponse, error) {
+type PortInitAccounts struct {
+	owner     solana.PublicKey
+	payer     solana.PublicKey
+	tokenMint solana.PublicKey
+}
+
+func (c *Client) PortInit(ctx context.Context, accounts PortInitAccounts, stakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "port/init", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"payer":        payer,
-			"tokenMint":    tokenMint,
+			"ownerAccount": accounts.owner,
+			"payer":        accounts.payer,
+			"tokenMint":    accounts.tokenMint,
 		},
 	}, &result)
 
 	return &result, err
 }
 
-func (c *Client) PortStake(ctx context.Context, owner solana.PublicKey, payer solana.PublicKey, tokenMint solana.PublicKey, stakeAmount uint64) (*OperationResponse, error) {
+type PortStakeAccounts struct {
+	owner     solana.PublicKey
+	payer     solana.PublicKey
+	tokenMint solana.PublicKey
+}
+
+func (c *Client) PortStake(ctx context.Context, accounts PortStakeAccounts, stakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "port/stake", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"payer":        payer,
-			"tokenMint":    tokenMint,
+			"ownerAccount": accounts.owner,
+			"payer":        accounts.payer,
+			"tokenMint":    accounts.tokenMint,
 		},
 		Data: map[string]interface{}{
 			"stakeAmount": stakeAmount,
@@ -35,12 +47,17 @@ func (c *Client) PortStake(ctx context.Context, owner solana.PublicKey, payer so
 	return &result, err
 }
 
-func (c *Client) PortUnstake(ctx context.Context, owner solana.PublicKey, tokenMint solana.PublicKey, unstakeAmount uint64) (*OperationResponse, error) {
+type PortUnstakeAccounts struct {
+	owner     solana.PublicKey
+	tokenMint solana.PublicKey
+}
+
+func (c *Client) PortUnstake(ctx context.Context, accounts PortUnstakeAccounts, unstakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "port/unstake", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"tokenMint":    tokenMint,
+			"ownerAccount": accounts.owner,
+			"tokenMint":    accounts.tokenMint,
 		},
 		Data: map[string]interface{}{
 			"unstakeAmount": unstakeAmount,

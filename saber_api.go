@@ -6,30 +6,47 @@ import (
 	"github.com/gagliardetto/solana-go"
 )
 
-func (c *Client) SaberStake(ctx context.Context, owner solana.PublicKey, lpTokenMint solana.PublicKey, stakeAmountA uint64, stakeAmountB uint64) (*OperationResponse, error) {
+type SaberStakeAccounts struct {
+	owner       solana.PublicKey
+	lpTokenMint solana.PublicKey
+}
+
+type SaberStakeData struct {
+	stakeAmountA uint64
+	stakeAmountB uint64
+}
+
+func (c *Client) SaberStake(ctx context.Context, accounts SaberStakeAccounts, data SaberStakeData) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "saber/stake", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"lpTokenMint":  lpTokenMint,
+			"ownerAccount": accounts.owner,
+			"lpTokenMint":  accounts.lpTokenMint,
 		},
 		Data: map[string]interface{}{
-			"stakeAmountA": stakeAmountA,
-			"stakeAmountB": stakeAmountB,
+			"stakeAmountA": data.stakeAmountA,
+			"stakeAmountB": data.stakeAmountB,
 		},
 	}, &result)
 
 	return &result, err
 }
 
-func (c *Client) SaberUnstake(ctx context.Context, owner solana.PublicKey, lpTokenMint solana.PublicKey, withdrawMint solana.PublicKey, destinationTokenAccount solana.PublicKey, unstakeAmount uint64) (*OperationResponse, error) {
+type SaberUnstakeAccounts struct {
+	owner                   solana.PublicKey
+	lpTokenMint             solana.PublicKey
+	withdrawMint            solana.PublicKey
+	destinationTokenAccount solana.PublicKey
+}
+
+func (c *Client) SaberUnstake(ctx context.Context, accounts SaberUnstakeAccounts, unstakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "saber/stake", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount":            owner,
-			"lpTokenMint":             lpTokenMint,
-			"withdrawMint":            withdrawMint,
-			"destinationTokenAccount": destinationTokenAccount,
+			"ownerAccount":            accounts.owner,
+			"lpTokenMint":             accounts.lpTokenMint,
+			"withdrawMint":            accounts.withdrawMint,
+			"destinationTokenAccount": accounts.destinationTokenAccount,
 		},
 		Data: map[string]interface{}{
 			"unstakeAmount": unstakeAmount,

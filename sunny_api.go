@@ -6,26 +6,38 @@ import (
 	"github.com/gagliardetto/solana-go"
 )
 
-func (c *Client) SunnyInitVault(ctx context.Context, owner solana.PublicKey, payer solana.PublicKey, tokenMint solana.PublicKey, stakeAmountA uint64, stakeAmountB uint64) (*OperationResponse, error) {
+type SunnyInitVaultAccounts struct {
+	owner     solana.PublicKey
+	payer     solana.PublicKey
+	tokenMint solana.PublicKey
+}
+
+func (c *Client) SunnyInitVault(ctx context.Context, accounts SunnyInitVaultAccounts) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "sunny/init-vault", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"payer":        payer,
-			"tokenMint":    tokenMint,
+			"ownerAccount": accounts.owner,
+			"payer":        accounts.payer,
+			"tokenMint":    accounts.tokenMint,
 		},
 	}, &result)
 
 	return &result, err
 }
 
-func (c *Client) SunnyStake(ctx context.Context, owner solana.PublicKey, tokenMint solana.PublicKey, payer solana.PublicKey, stakeAmount uint64) (*OperationResponse, error) {
+type SunnyStakeAccounts struct {
+	owner     solana.PublicKey
+	tokenMint solana.PublicKey
+	payer     solana.PublicKey
+}
+
+func (c *Client) SunnyStake(ctx context.Context, accounts SunnyStakeAccounts, stakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "sunny/stake", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"payer":        payer,
-			"tokenMint":    tokenMint,
+			"ownerAccount": accounts.owner,
+			"payer":        accounts.payer,
+			"tokenMint":    accounts.tokenMint,
 		},
 		Data: map[string]interface{}{
 			"stakeAmount": stakeAmount,
@@ -35,13 +47,19 @@ func (c *Client) SunnyStake(ctx context.Context, owner solana.PublicKey, tokenMi
 	return &result, err
 }
 
-func (c *Client) SunnyUnstake(ctx context.Context, owner solana.PublicKey, tokenMint solana.PublicKey, payer solana.PublicKey, unstakeAmount uint64) (*OperationResponse, error) {
+type SunnyUnstakeAccounts struct {
+	owner     solana.PublicKey
+	tokenMint solana.PublicKey
+	payer     solana.PublicKey
+}
+
+func (c *Client) SunnyUnstake(ctx context.Context, accounts SunnyUnstakeAccounts, unstakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "sunny/unstake", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"payer":        payer,
-			"tokenMint":    tokenMint,
+			"ownerAccount": accounts.owner,
+			"payer":        accounts.payer,
+			"tokenMint":    accounts.tokenMint,
 		},
 		Data: map[string]interface{}{
 			"unstakeAmount": unstakeAmount,
@@ -51,39 +69,51 @@ func (c *Client) SunnyUnstake(ctx context.Context, owner solana.PublicKey, token
 	return &result, err
 }
 
-func (c *Client) SunnyClaimSaberRewards(ctx context.Context, owner solana.PublicKey, tokenMint solana.PublicKey, payer solana.PublicKey) (*OperationResponse, error) {
+type SunnyClaimAccounts struct {
+	owner     solana.PublicKey
+	tokenMint solana.PublicKey
+	payer     solana.PublicKey
+}
+
+func (c *Client) SunnyClaimSaberRewards(ctx context.Context, accounts SunnyClaimAccounts) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "sunny/claim-saber-rewards", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"payer":        payer,
-			"tokenMint":    tokenMint,
+			"ownerAccount": accounts.owner,
+			"payer":        accounts.payer,
+			"tokenMint":    accounts.tokenMint,
 		},
 	}, &result)
 
 	return &result, err
 }
 
-func (c *Client) SunnyClaimSunnyRewards(ctx context.Context, owner solana.PublicKey, tokenMint solana.PublicKey, payer solana.PublicKey) (*OperationResponse, error) {
+func (c *Client) SunnyClaimSunnyRewards(ctx context.Context, accounts SunnyClaimAccounts) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "sunny/claim-sunny-rewards", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"payer":        payer,
-			"tokenMint":    tokenMint,
+			"ownerAccount": accounts.owner,
+			"payer":        accounts.payer,
+			"tokenMint":    accounts.tokenMint,
 		},
 	}, &result)
 
 	return &result, err
 }
 
-func (c *Client) SunnyWithdrawRewardsFromVault(ctx context.Context, owner solana.PublicKey, tokenMint solana.PublicKey, payer solana.PublicKey, platform string) (*OperationResponse, error) {
+type SunnyWithdrawRewardsFromVaultAccounts struct {
+	owner     solana.PublicKey
+	tokenMint solana.PublicKey
+	payer     solana.PublicKey
+}
+
+func (c *Client) SunnyWithdrawRewardsFromVault(ctx context.Context, accounts SunnyWithdrawRewardsFromVaultAccounts, platform string) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "sunny/withdraw-rewards-from-vault", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"payer":        payer,
-			"tokenMint":    tokenMint,
+			"ownerAccount": accounts.owner,
+			"payer":        accounts.payer,
+			"tokenMint":    accounts.tokenMint,
 		},
 		Platform: platform,
 	}, &result)
@@ -91,24 +121,29 @@ func (c *Client) SunnyWithdrawRewardsFromVault(ctx context.Context, owner solana
 	return &result, err
 }
 
-func (c *Client) SunnyRedeemSaber(ctx context.Context, owner solana.PublicKey, payer solana.PublicKey) (*OperationResponse, error) {
+type SunnyRedeemAccounts struct {
+	owner solana.PublicKey
+	payer solana.PublicKey
+}
+
+func (c *Client) SunnyRedeemSaber(ctx context.Context, accounts SunnyRedeemAccounts) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "sunny/redeem-saber", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"payer":        payer,
+			"ownerAccount": accounts.owner,
+			"payer":        accounts.payer,
 		},
 	}, &result)
 
 	return &result, err
 }
 
-func (c *Client) SunnyRedeemSunny(ctx context.Context, owner solana.PublicKey, payer solana.PublicKey) (*OperationResponse, error) {
+func (c *Client) SunnyRedeemSunny(ctx context.Context, accounts SunnyRedeemAccounts) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "sunny/redeem-sunny", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": owner,
-			"payer":        payer,
+			"ownerAccount": accounts.owner,
+			"payer":        accounts.payer,
 		},
 	}, &result)
 
