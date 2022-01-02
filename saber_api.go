@@ -7,25 +7,25 @@ import (
 )
 
 type SaberStakeAccounts struct {
-	owner       solana.PublicKey
-	lpTokenMint solana.PublicKey
+	Owner       solana.PublicKey
+	LpTokenMint solana.PublicKey
 }
 
 type SaberStakeData struct {
-	stakeAmountA uint64
-	stakeAmountB uint64
+	StakeAmountA uint64
+	StakeAmountB uint64
 }
 
 func (c *Client) SaberStake(ctx context.Context, accounts SaberStakeAccounts, data SaberStakeData) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "saber/stake", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": accounts.owner,
-			"lpTokenMint":  accounts.lpTokenMint,
+			"ownerAccount": accounts.Owner,
+			"lpTokenMint":  accounts.LpTokenMint,
 		},
 		Data: map[string]interface{}{
-			"stakeAmountA": data.stakeAmountA,
-			"stakeAmountB": data.stakeAmountB,
+			"stakeAmountA": data.StakeAmountA,
+			"stakeAmountB": data.StakeAmountB,
 		},
 	}, &result)
 
@@ -33,20 +33,20 @@ func (c *Client) SaberStake(ctx context.Context, accounts SaberStakeAccounts, da
 }
 
 type SaberUnstakeAccounts struct {
-	owner                   solana.PublicKey
-	lpTokenMint             solana.PublicKey
-	withdrawMint            solana.PublicKey
-	destinationTokenAccount solana.PublicKey
+	Owner                   solana.PublicKey
+	LpTokenMint             solana.PublicKey
+	WithdrawMint            solana.PublicKey
+	DestinationTokenAccount solana.PublicKey
 }
 
 func (c *Client) SaberUnstake(ctx context.Context, accounts SaberUnstakeAccounts, unstakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "saber/stake", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount":            accounts.owner,
-			"lpTokenMint":             accounts.lpTokenMint,
-			"withdrawMint":            accounts.withdrawMint,
-			"destinationTokenAccount": accounts.destinationTokenAccount,
+			"ownerAccount":            accounts.Owner,
+			"lpTokenMint":             accounts.LpTokenMint,
+			"withdrawMint":            accounts.WithdrawMint,
+			"destinationTokenAccount": accounts.DestinationTokenAccount,
 		},
 		Data: map[string]interface{}{
 			"unstakeAmount": unstakeAmount,

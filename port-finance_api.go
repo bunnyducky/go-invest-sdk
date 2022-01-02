@@ -7,18 +7,18 @@ import (
 )
 
 type PortInitAccounts struct {
-	owner     solana.PublicKey
-	payer     solana.PublicKey
-	tokenMint solana.PublicKey
+	Owner     solana.PublicKey
+	Payer     solana.PublicKey
+	TokenMint solana.PublicKey
 }
 
 func (c *Client) PortInit(ctx context.Context, accounts PortInitAccounts, stakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "port/init", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": accounts.owner,
-			"payer":        accounts.payer,
-			"tokenMint":    accounts.tokenMint,
+			"ownerAccount": accounts.Owner,
+			"payer":        accounts.Payer,
+			"tokenMint":    accounts.TokenMint,
 		},
 	}, &result)
 
@@ -26,18 +26,18 @@ func (c *Client) PortInit(ctx context.Context, accounts PortInitAccounts, stakeA
 }
 
 type PortStakeAccounts struct {
-	owner     solana.PublicKey
-	payer     solana.PublicKey
-	tokenMint solana.PublicKey
+	Owner     solana.PublicKey
+	Payer     solana.PublicKey
+	TokenMint solana.PublicKey
 }
 
 func (c *Client) PortStake(ctx context.Context, accounts PortStakeAccounts, stakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "port/stake", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": accounts.owner,
-			"payer":        accounts.payer,
-			"tokenMint":    accounts.tokenMint,
+			"ownerAccount": accounts.Owner,
+			"payer":        accounts.Payer,
+			"tokenMint":    accounts.TokenMint,
 		},
 		Data: map[string]interface{}{
 			"stakeAmount": stakeAmount,
@@ -48,16 +48,16 @@ func (c *Client) PortStake(ctx context.Context, accounts PortStakeAccounts, stak
 }
 
 type PortUnstakeAccounts struct {
-	owner     solana.PublicKey
-	tokenMint solana.PublicKey
+	Owner     solana.PublicKey
+	TokenMint solana.PublicKey
 }
 
 func (c *Client) PortUnstake(ctx context.Context, accounts PortUnstakeAccounts, unstakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "port/unstake", OperationRequest{
 		Accounts: map[string]interface{}{
-			"ownerAccount": accounts.owner,
-			"tokenMint":    accounts.tokenMint,
+			"ownerAccount": accounts.Owner,
+			"tokenMint":    accounts.TokenMint,
 		},
 		Data: map[string]interface{}{
 			"unstakeAmount": unstakeAmount,
