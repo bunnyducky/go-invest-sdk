@@ -37,11 +37,12 @@ func (r *OperationResponse) SecondInstructionData() []byte {
 	return r.Instructions[1].DataUnsafe
 }
 
-func (r *OperationResponse) AllInstructions() []solana.Instruction {
-	return nil
+func (r *OperationResponse) AllInstructions() []Instruction {
+	allInstructions := r.PrepareInstructions
+	allInstructions = append(allInstructions, r.Instructions...)
+	allInstructions = append(allInstructions, r.CleanupInstructions...)
+	return allInstructions
 }
-
-var _ solana.Instruction = (*Instruction)(nil)
 
 type Instruction struct {
 	ProgramIDUnsafe solana.PublicKey `json:"programId,omitempty"`
@@ -80,17 +81,4 @@ func (inst *Instruction) Accounts() (accounts []*solana.AccountMeta) {
 
 func (inst *Instruction) Data() ([]byte, error) {
 	return inst.DataUnsafe, nil
-}
-
-type Instructions struct {
-	PrepareInstructions []Instruction `json:"prepareInstructions"`
-	Instructions        []Instruction `json:"instructions"`
-	CleanupInstructions []Instruction `json:"cleanupInstructions"`
-}
-
-func (insts Instructions) All() (all []Instruction) {
-	all = append(all, insts.PrepareInstructions...)
-	all = append(all, insts.Instructions...)
-	all = append(all, insts.CleanupInstructions...)
-	return all
 }
