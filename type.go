@@ -64,11 +64,11 @@ type AccountMeta struct {
 	IsSigner   bool             `json:"isSigner,omitempty"`
 }
 
-func (inst *Instruction) ProgramID() solana.PublicKey {
+func (inst Instruction) ProgramID() solana.PublicKey {
 	return inst.ProgramIDUnsafe
 }
 
-func (inst *Instruction) Accounts() (accounts []*solana.AccountMeta) {
+func (inst Instruction) Accounts() (accounts []*solana.AccountMeta) {
 	for _, act := range inst.Keys {
 		accounts = append(accounts, &solana.AccountMeta{
 			PublicKey:  act.PublicKey,
@@ -79,6 +79,6 @@ func (inst *Instruction) Accounts() (accounts []*solana.AccountMeta) {
 	return accounts
 }
 
-func (inst *Instruction) Data() ([]byte, error) {
+func (inst Instruction) Data() ([]byte, error) {
 	return inst.DataUnsafe, nil
 }

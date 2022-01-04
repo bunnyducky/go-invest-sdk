@@ -14,7 +14,7 @@ type JupiterSwapAccount struct {
 
 type JupiterSwapData struct {
 	InputAmount uint64
-	Slippage    int16
+	Slippage    float32
 }
 
 func (c *Client) JupiterSwapData(ctx context.Context, accounts JupiterSwapAccount, data JupiterSwapData) (*OperationResponse, error) {
