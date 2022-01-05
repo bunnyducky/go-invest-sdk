@@ -57,6 +57,8 @@ func (r *OperationResponse) AllInstructions() (all []solana.Instruction) {
 	return
 }
 
+var _ solana.Instruction = (*Instruction)(nil)
+
 type Instruction struct {
 	ProgramIDUnsafe solana.PublicKey `json:"programId,omitempty"`
 	Keys            []AccountMeta    `json:"keys,omitempty"`

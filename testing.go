@@ -36,8 +36,8 @@ func GetTestInfra(t *testing.T) *ExecuteInfrastructure {
 	sLogger := logger.Sugar()
 
 	investSDKClient := Client{
-		Host: "http://127.0.0.1:3500",
-		// Host:   "https://invest-api.partyparrot.finance",
+		// Host: "http://127.0.0.1:3500",
+		Host:   "https://invest-api.partyparrot.finance",
 		Client: http.DefaultClient,
 		Logger: sLogger,
 	}
