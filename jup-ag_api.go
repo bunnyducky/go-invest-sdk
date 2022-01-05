@@ -13,7 +13,7 @@ type JupiterSwapAccount struct {
 }
 
 type JupiterSwapData struct {
-	InputAmount uint64
+	InputAmount float32
 	Slippage    float32
 }
 
