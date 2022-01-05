@@ -37,11 +37,24 @@ func (r *OperationResponse) SecondInstructionData() []byte {
 	return r.Instructions[1].DataUnsafe
 }
 
-func (r *OperationResponse) AllInstructions() []Instruction {
-	allInstructions := r.PrepareInstructions
-	allInstructions = append(allInstructions, r.Instructions...)
-	allInstructions = append(allInstructions, r.CleanupInstructions...)
-	return allInstructions
+//func (r *OperationResponse) AllInstructions() []Instruction {
+//allInstructions := r.PrepareInstructions
+//allInstructions = append(allInstructions, r.Instructions...)
+//allInstructions = append(allInstructions, r.CleanupInstructions...)
+//return allInstructions
+//}
+
+func (r *OperationResponse) AllInstructions() (all []solana.Instruction) {
+	for _, i := range r.PrepareInstructions {
+		all = append(all, i)
+	}
+	for _, i := range r.Instructions {
+		all = append(all, i)
+	}
+	for _, i := range r.CleanupInstructions {
+		all = append(all, i)
+	}
+	return
 }
 
 type Instruction struct {
