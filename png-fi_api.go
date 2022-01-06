@@ -18,7 +18,7 @@ type PNGAddLiquidityData struct {
 	TokenBAmount uint64
 }
 
-func (c *Client) PNGAddLiquidityData(ctx context.Context, accounts PNGAddLiquidityAccount, data PNGAddLiquidityData) (*OperationResponse, error) {
+func (c *Client) PNGAddLiquidity(ctx context.Context, accounts PNGAddLiquidityAccount, data PNGAddLiquidityData) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "png-fi/add-liquidity", OperationRequest{
 		Accounts: map[string]interface{}{
@@ -32,6 +32,22 @@ func (c *Client) PNGAddLiquidityData(ctx context.Context, accounts PNGAddLiquidi
 			"tokenBAmount": data.TokenBAmount,
 		},
 	}, &result)
+	return &result, err
+}
 
+func (c *Client) PNGAddLiquiditySimulate(ctx context.Context, accounts PNGAddLiquidityAccount, data PNGAddLiquidityData) (*SimulationResponse, error) {
+	result := SimulationResponse{}
+	err := c.post(ctx, "png-fi/add-liquidity/simulate", OperationRequest{
+		Accounts: map[string]interface{}{
+			"ownerAccount": accounts.Owner,
+			"payer":        accounts.Payer,
+			"tokenAMint":   accounts.TokenAMint,
+			"tokenBMint":   accounts.TokenBMint,
+		},
+		Data: map[string]interface{}{
+			"tokenAAmount": data.TokenAAmount,
+			"tokenBAmount": data.TokenBAmount,
+		},
+	}, &result)
 	return &result, err
 }

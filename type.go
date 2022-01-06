@@ -16,6 +16,10 @@ const (
 	SUNNY_USDC OrcaSwapPool = "GHuoeq9UnFBsBhMwH43eL3RWX5XVXbSRYJymmyMYpT7n"
 )
 
+type SimulationResponse struct {
+	Balances map[string]int `json:"balances"`
+}
+
 type OperationRequest struct {
 	Accounts map[string]interface{} `json:"accounts"`
 	Data     map[string]interface{} `json:"data"`
