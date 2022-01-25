@@ -9,12 +9,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestQuarryStake(t *testing.T) {
+func TestQuarry_Stake(t *testing.T) {
 	infra := GetTestInfra(t)
 
 	// Saros PRT-CASH LP
 	res, err := infra.Client.QuarryStake(context.Background(),
-		QuarryStakeAccounts{
+		QuarryAccounts{
 			Owner:       solana.MustPublicKeyFromBase58("6uHZK4v5fz9JZX6VaVyxus5AxFqJk7B8jiHw1gMYaSZg"),
 			Payer:       solana.MustPublicKeyFromBase58("6uHZK4v5fz9JZX6VaVyxus5AxFqJk7B8jiHw1gMYaSZg"),
 			Rewarder:    solana.MustPublicKeyFromBase58("5LAZ5rUe1CLJoKYauyVXdbG6e7nBmY2j5mJ8PnesCA8z"), // PRT
@@ -27,18 +27,35 @@ func TestQuarryStake(t *testing.T) {
 	fmt.Println(res)
 }
 
-func TestQuarryUnstake(t *testing.T) {
+func TestQuarry_Unstake(t *testing.T) {
 	infra := GetTestInfra(t)
 
 	// Saros PRT-CASH LP
 	res, err := infra.Client.QuarryUnstake(context.Background(),
-		QuarryStakeAccounts{
+		QuarryAccounts{
 			Owner:       solana.MustPublicKeyFromBase58("6uHZK4v5fz9JZX6VaVyxus5AxFqJk7B8jiHw1gMYaSZg"),
 			Payer:       solana.MustPublicKeyFromBase58("6uHZK4v5fz9JZX6VaVyxus5AxFqJk7B8jiHw1gMYaSZg"),
 			Rewarder:    solana.MustPublicKeyFromBase58("5LAZ5rUe1CLJoKYauyVXdbG6e7nBmY2j5mJ8PnesCA8z"), // PRT
 			LpTokenMint: solana.MustPublicKeyFromBase58("EoNJJWQMdvMscCL7V6wNrGaDLi791sPZH1hSzHcwfsDj"), // PAI
 		},
 		1_000_000, // 1 LP
+	)
+
+	assert.NoError(t, err)
+	fmt.Println(res)
+}
+
+func TestQuarry_Claim(t *testing.T) {
+	infra := GetTestInfra(t)
+
+	// Saros PRT-CASH LP
+	res, err := infra.Client.QuarryClaim(context.Background(),
+		QuarryAccounts{
+			Owner:       solana.MustPublicKeyFromBase58("6uHZK4v5fz9JZX6VaVyxus5AxFqJk7B8jiHw1gMYaSZg"),
+			Payer:       solana.MustPublicKeyFromBase58("6uHZK4v5fz9JZX6VaVyxus5AxFqJk7B8jiHw1gMYaSZg"),
+			Rewarder:    solana.MustPublicKeyFromBase58("5LAZ5rUe1CLJoKYauyVXdbG6e7nBmY2j5mJ8PnesCA8z"), // PRT
+			LpTokenMint: solana.MustPublicKeyFromBase58("EoNJJWQMdvMscCL7V6wNrGaDLi791sPZH1hSzHcwfsDj"), // PAI
+		},
 	)
 
 	assert.NoError(t, err)

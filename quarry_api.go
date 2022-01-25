@@ -6,14 +6,14 @@ import (
 	"github.com/gagliardetto/solana-go"
 )
 
-type QuarryStakeAccounts struct {
+type QuarryAccounts struct {
 	Owner       solana.PublicKey
 	Payer       solana.PublicKey
 	Rewarder    solana.PublicKey
 	LpTokenMint solana.PublicKey
 }
 
-func (c *Client) QuarryStake(ctx context.Context, accounts QuarryStakeAccounts, stakeAmount uint64) (*OperationResponse, error) {
+func (c *Client) QuarryStake(ctx context.Context, accounts QuarryAccounts, stakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "quarry/stake", OperationRequest{
 		Accounts: map[string]interface{}{
@@ -29,7 +29,7 @@ func (c *Client) QuarryStake(ctx context.Context, accounts QuarryStakeAccounts, 
 	return &result, err
 }
 
-func (c *Client) QuarryUnstake(ctx context.Context, accounts QuarryStakeAccounts, unstakeAmount uint64) (*OperationResponse, error) {
+func (c *Client) QuarryUnstake(ctx context.Context, accounts QuarryAccounts, unstakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
 	err := c.post(ctx, "quarry/unstake", OperationRequest{
 		Accounts: map[string]interface{}{
@@ -40,6 +40,19 @@ func (c *Client) QuarryUnstake(ctx context.Context, accounts QuarryStakeAccounts
 		},
 		Data: map[string]interface{}{
 			"unstakeAmount": unstakeAmount,
+		},
+	}, &result)
+	return &result, err
+}
+
+func (c *Client) QuarryClaim(ctx context.Context, accounts QuarryAccounts) (*OperationResponse, error) {
+	result := OperationResponse{}
+	err := c.post(ctx, "quarry/claim", OperationRequest{
+		Accounts: map[string]interface{}{
+			"ownerAccount": accounts.Owner,
+			"payer":        accounts.Payer,
+			"rewarderKey":  accounts.Rewarder,
+			"lpTokenMint":  accounts.LpTokenMint,
 		},
 	}, &result)
 	return &result, err
