@@ -29,8 +29,8 @@ func (c *Client) QuarryStake(ctx context.Context, accounts QuarryStakeAccounts, 
 	return &result, err
 }
 
-func (c *Client) QuarryUnstake(ctx context.Context, accounts QuarryStakeAccounts, unstakeAmount uint64) (*SimulationResponse, error) {
-	result := SimulationResponse{}
+func (c *Client) QuarryUnstake(ctx context.Context, accounts QuarryStakeAccounts, unstakeAmount uint64) (*OperationResponse, error) {
+	result := OperationResponse{}
 	err := c.post(ctx, "quarry/unstake", OperationRequest{
 		Accounts: map[string]interface{}{
 			"ownerAccount": accounts.Owner,
