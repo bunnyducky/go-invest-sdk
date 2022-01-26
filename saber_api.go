@@ -41,7 +41,7 @@ type SaberUnstakeAccounts struct {
 
 func (c *Client) SaberUnstake(ctx context.Context, accounts SaberUnstakeAccounts, unstakeAmount uint64) (*OperationResponse, error) {
 	result := OperationResponse{}
-	err := c.post(ctx, "saber/stake", OperationRequest{
+	err := c.post(ctx, "saber/unstake", OperationRequest{
 		Accounts: map[string]interface{}{
 			"ownerAccount":            accounts.Owner,
 			"lpTokenMint":             accounts.LpTokenMint,
