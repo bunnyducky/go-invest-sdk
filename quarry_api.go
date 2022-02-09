@@ -7,10 +7,10 @@ import (
 )
 
 type QuarryAccounts struct {
-	Owner       solana.PublicKey
-	Payer       solana.PublicKey
-	Rewarder    solana.PublicKey
-	LpTokenMint solana.PublicKey
+	Owner     solana.PublicKey
+	Payer     solana.PublicKey
+	Rewarder  solana.PublicKey
+	TokenMint solana.PublicKey
 }
 
 func (c *Client) QuarryStake(ctx context.Context, accounts QuarryAccounts, stakeAmount uint64) (*OperationResponse, error) {
@@ -20,7 +20,7 @@ func (c *Client) QuarryStake(ctx context.Context, accounts QuarryAccounts, stake
 			"ownerAccount": accounts.Owner,
 			"payer":        accounts.Payer,
 			"rewarderKey":  accounts.Rewarder,
-			"lpTokenMint":  accounts.LpTokenMint,
+			"tokenMint":    accounts.TokenMint,
 		},
 		Data: map[string]interface{}{
 			"stakeAmount": stakeAmount,
@@ -36,7 +36,7 @@ func (c *Client) QuarryUnstake(ctx context.Context, accounts QuarryAccounts, uns
 			"ownerAccount": accounts.Owner,
 			"payer":        accounts.Payer,
 			"rewarderKey":  accounts.Rewarder,
-			"lpTokenMint":  accounts.LpTokenMint,
+			"tokenMint":    accounts.TokenMint,
 		},
 		Data: map[string]interface{}{
 			"unstakeAmount": unstakeAmount,
@@ -52,7 +52,7 @@ func (c *Client) QuarryClaim(ctx context.Context, accounts QuarryAccounts) (*Ope
 			"ownerAccount": accounts.Owner,
 			"payer":        accounts.Payer,
 			"rewarderKey":  accounts.Rewarder,
-			"lpTokenMint":  accounts.LpTokenMint,
+			"tokenMint":    accounts.TokenMint,
 		},
 	}, &result)
 	return &result, err
