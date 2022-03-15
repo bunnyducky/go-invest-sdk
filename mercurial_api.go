@@ -15,6 +15,7 @@ type MercurialStakeAccounts struct {
 	Owner               solana.PublicKey
 	Payer               solana.PublicKey
 	Pool                string
+	LpTokenMint         string
 	SourceTokenAccounts []solana.PublicKey
 }
 
@@ -51,6 +52,7 @@ func (c *Client) MercurialStakeEstimate(ctx context.Context, accounts MercurialS
 			"ownerAccount":        accounts.Owner,
 			"payer":               accounts.Payer,
 			"pool":                accounts.Pool,
+			"lpTokenMint":         accounts.LpTokenMint,
 			"sourceTokenAccounts": accounts.SourceTokenAccounts,
 		},
 		Data: map[string]interface{}{
@@ -65,6 +67,7 @@ type MercurialUnstakeAccounts struct {
 	Owner                   solana.PublicKey
 	Payer                   solana.PublicKey
 	Pool                    string
+	LpTokenMint             string
 	DestinationTokenMint    solana.PublicKey
 	DestinationTokenAccount solana.PublicKey
 }
@@ -81,6 +84,7 @@ func (c *Client) MercurialUnstake(ctx context.Context, accounts MercurialUnstake
 			"ownerAccount":            accounts.Owner,
 			"payer":                   accounts.Payer,
 			"pool":                    accounts.Pool,
+			"lpTokenMint":             accounts.LpTokenMint,
 			"destinationTokenMint":    accounts.DestinationTokenMint,
 			"destinationTokenAccount": accounts.DestinationTokenAccount,
 		},
