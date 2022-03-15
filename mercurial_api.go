@@ -15,7 +15,7 @@ type MercurialStakeAccounts struct {
 	Owner               solana.PublicKey
 	Payer               solana.PublicKey
 	Pool                string
-	LpTokenMint         string
+	LpTokenMint         solana.PublicKey
 	SourceTokenAccounts []solana.PublicKey
 }
 
@@ -67,7 +67,7 @@ type MercurialUnstakeAccounts struct {
 	Owner                   solana.PublicKey
 	Payer                   solana.PublicKey
 	Pool                    string
-	LpTokenMint             string
+	LpTokenMint             solana.PublicKey
 	DestinationTokenMint    solana.PublicKey
 	DestinationTokenAccount solana.PublicKey
 }
