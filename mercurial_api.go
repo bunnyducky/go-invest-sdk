@@ -31,6 +31,7 @@ func (c *Client) MercurialStake(ctx context.Context, accounts MercurialStakeAcco
 			"ownerAccount":        accounts.Owner,
 			"payer":               accounts.Payer,
 			"pool":                accounts.Pool,
+			"lpTokenMint":         accounts.LpTokenMint,
 			"sourceTokenAccounts": accounts.SourceTokenAccounts,
 		},
 		Data: map[string]interface{}{
